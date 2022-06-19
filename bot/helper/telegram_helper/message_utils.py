@@ -36,18 +36,18 @@ def sendMarkup(text: str, bot, message: Message, reply_markup: InlineKeyboardMar
         LOGGER.error(str(e))
         return
 
-def sendLog(text: str, bot, update: Update, reply_markup: InlineKeyboardMarkup):
+def sendLog(text: str, bot, message: Message, reply_markup: InlineKeyboardMarkup):
     try:
         return bot.send_message(f"{LOG_CHANNEL}",
-                             reply_to_message_id=update.message.message_id,
+                             reply_to_message_id=message.message_id,
                              text=text, disable_web_page_preview=True, reply_markup=reply_markup, allow_sending_without_reply=True, parse_mode='HTMl')
     except Exception as e:
         LOGGER.error(str(e))
         
-def sendtextlog(text: str, bot, update: Update):
+def sendtextlog(text: str, bot, message: Message):
     try:
         return bot.send_message(f"{LOG_CHANNEL_LOGGER}",
-                             reply_to_message_id=update.message.message_id,
+                             reply_to_message_id=message.message_id,
                              text=text, disable_web_page_preview=True, allow_sending_without_reply=True, parse_mode='HTMl')
     except Exception as e:
         LOGGER.error(str(e))
@@ -102,13 +102,13 @@ async def sendRss_pyro(text: str):
         LOGGER.error(str(e))
         return
 
-def sendPrivate(text: str, bot, update: Update, reply_markup: InlineKeyboardMarkup):
+def sendPrivate(text: str, bot, message: Message, reply_markup: InlineKeyboardMarkup):
     bot_d = bot.get_me()
     b_uname = bot_d.username
     
     try:
         return bot.send_message(update.message.from_user.id,
-                             reply_to_message_id=update.message.message_id,
+                             reply_to_message_id=message.message_id,
                              text=text, disable_web_page_preview=True, reply_markup=reply_markup, allow_sending_without_reply=True, parse_mode='HTMl')
     except Exception as e:
         LOGGER.error(str(e))
