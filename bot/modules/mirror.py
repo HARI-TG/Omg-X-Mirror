@@ -201,7 +201,6 @@ class MirrorListener:
             if not files:
                 sendMessage(msg, self.bot, self.message)
             else:
-                chat_id = str(self.message.chat.id)[4:]
                 msg += f'\n𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗕𝗬: {self.tag}\n\n'
                 msg += f"𝙄'𝙫𝙚 𝙎𝙚𝙣𝙙 𝙩𝙝𝙚 𝙁𝙞𝙡𝙚𝙨 𝙏𝙤 𝙔𝙤𝙪𝙧 𝙋𝙈 & 𝙇𝙤𝙜 𝘾𝙝𝙖𝙣𝙣𝙚𝙡."
                 auto = sendMessage(msg, self.bot, self.message)
