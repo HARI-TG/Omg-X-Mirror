@@ -12,7 +12,7 @@ from bot.helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.mirror_utils.status_utils.clone_status import CloneStatus
 from bot import dispatcher, LOGGER, STOP_DUPLICATE, download_dict, download_dict_lock, Interval
-from bot.helper.ext_utils.bot_utils import is_gdrive_link, is_gdtot_link, new_thread
+from bot.helper.ext_utils.bot_utils import is_gdrive_link, is_gdtot_link, new_thread, is_appdrive_link, is_driveapp_link
 from bot.helper.mirror_utils.download_utils.direct_link_generator import gdtot
 from bot.helper.ext_utils.parser import appdrive
 from bot.helper.ext_utils.exceptions import DirectDownloadLinkException
@@ -38,32 +38,29 @@ def _clone(message, bot, multi=0):
             tag = f"@{reply_to.from_user.username}"
         else:
             tag = reply_to.from_user.mention_html(reply_to.from_user.first_name)
-    else:
-        link = ''
-    try:
-        is_gdtot = is_gdtot_link(link)
-        if is_gdtot:
-            msg = sendMessage(f"💤𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗚𝗗𝗧𝗼𝗧 𝗟𝗶𝗻𝗸: <code>{link}</code>", context.bot, update)
-            LOGGER.info(f"Processing: {link}")
+    is_gdtot = is_gdtot_link(link)
+    is_appdrive = is_appdrive_link(link)
+    is_driveapp = is_driveapp_link(link)
+    if is_gdtot:
+        try:
+            msg = sendMessage(f"💤𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗚𝗗𝗧𝗼𝗧 𝗟𝗶𝗻𝗸: <code>{link}</code>", bot, message)
             link = gdtot(link)
-            deleteMessage(context.bot, msg)
-        is_appdrive = True if "appdrive.in" in link else False
-        if is_appdrive:
-            msg = sendMessage(f"💤𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗔𝗽𝗽𝗱𝗿𝗶𝘃𝗲 𝗟𝗶𝗻𝗸: <code>{link}</code>", context.bot, update)
-            LOGGER.info(f"Processing: {link}")
+            deleteMessage(bot, msg)
+    if is_appdrive:
+        msg = sendMessage(f"💤𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗔𝗽𝗽𝗱𝗿𝗶𝘃𝗲 𝗟𝗶𝗻𝗸: <code>{link}</code>", bot, message)
+        try:
             apdict = appdrive(link)
             link = apdict.get('gdrive_link')
-            deleteMessage(context.bot, msg)
-        is_driveapp = True if "driveapp.in" in link else False
-        if is_driveapp:
-            msg = sendMessage(f"💤𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗗𝗿𝗶𝘃𝗲𝗮𝗽𝗽 𝗟𝗶𝗻𝗸: <code>{link}</code>", context.bot, update)
-            LOGGER.info(f"Processing: {link}")
+            deleteMessage(bot, msg)
+    if is_driveapp:
+        msg = sendMessage(f"💤𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗗𝗿𝗶𝘃𝗲𝗮𝗽𝗽 𝗟𝗶𝗻𝗸: <code>{link}</code>", bot, message)
+        try:
             apdict = appdrive(link)
             link = apdict.get('gdrive_link')
-            deleteMessage(context.bot, msg)
-    except DirectDownloadLinkException as e:
-        deleteMessage(bot, msg)
-        return sendMessage(str(e), bot, message)
+            deleteMessage(bot, msg)
+        except DirectDownloadLinkException as e:
+            deleteMessage(bot, msg)
+            return sendMessage(str(e), bot, message)
     if is_gdrive_link(link):
         gd = GoogleDriveHelper()
         res, size, name, files = gd.helper(link)
