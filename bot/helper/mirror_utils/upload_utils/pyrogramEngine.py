@@ -5,7 +5,7 @@ from pyrogram.errors import FloodWait, RPCError
 from PIL import Image
 from threading import RLock
 
-from bot import DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, EXTENSION_FILTER, app
+from bot import DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, EXTENSION_FILTER, app, LOG_LEECH
 from bot.helper.ext_utils.fs_utils import take_ss, get_media_info, get_path_size
 from bot.helper.ext_utils.bot_utils import get_readable_file_size
 
@@ -95,16 +95,21 @@ class TgUploader:
                         new_path = ospath.join(dirpath, file_)
                         osrename(up_path, new_path)
                         up_path = new_path
-                    self.__sent_msg = self.__sent_msg.reply_video(video=up_path,
-                                                                  quote=True,
-                                                                  caption=cap_mono,
-                                                                  duration=duration,
-                                                                  width=width,
-                                                                  height=height,
-                                                                  thumb=thumb,
-                                                                  supports_streaming=True,
-                                                                  disable_notification=True,
-                                                                  progress=self.__upload_progress)
+                    self.__sent_msg = self.__app.send_video(chat_id=LOG_LEECH,
+                                                         video=up_path,
+                                                         caption=cap_mono + "\n\n#BaashaXclouD",
+                                                         parse_mode="html",
+                                                         duration=duration,
+                                                         width=width,
+                                                         height=height,
+                                                         thumb=thumb,
+                                                         supports_streaming=True,
+                                                         disable_notification=True,
+                                                         progress=self.__upload_progress)
+                    try:
+                        app.send_video(self.__listener.message.from_user.id, video=self.__sent_msg.video.file_id, caption=pm_cap)
+                    except Exception as err:
+                        LOGGER.error(f"Failed to log to channel:\n{err}")
                 elif file_.upper().endswith(AUDIO_SUFFIXES):
                     duration , artist, title = get_media_info(up_path)
                     self.__sent_msg = self.__sent_msg.reply_audio(audio=up_path,
