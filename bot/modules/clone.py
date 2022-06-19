@@ -131,22 +131,22 @@ def _clone(message, bot, multi=0):
                     update_all_messages()
             except IndexError:
                 pass
-        if update.message.from_user.username:
-            uname = f'@{update.message.from_user.username}'
+        if message.from_user.username:
+            uname = f'@{message.from_user.username}'
         else:
-            uname = f'<a href="tg://user?id={update.message.from_user.id}">{update.message.from_user.first_name}</a>'
+            uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
         if uname is not None:
             cc = f'\n\n𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗕𝗬: {uname}'
             men = f'{uname}'
             msg_g = f"\n\n - 𝗗𝗼𝗻'𝘁 𝗦𝗵𝗮𝗿𝗲 𝘁𝗵𝗲 𝗜𝗻𝗱𝗲𝘅 𝗟𝗶𝗻𝗸"
             fwdpm = f"\n\n𝙄'𝙫𝙚 𝙎𝙚𝙣𝙙 𝙩𝙝𝙚 𝙇𝙞𝙣𝙠𝙨 𝙏𝙤 𝙔𝙤𝙪𝙧 𝙋𝙈 & 𝙇𝙤𝙜 𝘾𝙝𝙖𝙣𝙣𝙚𝙡"
         if button == "cancelled" or button == "":
-            sendMessage(men + result, context.bot, update)
+            sendMessage(men + result, bot, message)
         else:
-            sendLog(result + cc + msg_g, context.bot, update, button)
-            auto = sendMessage(result + cc + fwdpm, context.bot, update)
-            Thread(target=auto_delete, args=(context.bot, update.message, auto)).start()
-            sendPrivate(result + cc + msg_g, context.bot, update, button)
+            sendLog(result + cc + msg_g, bot, message, button)
+            auto = sendMessage(result + cc + fwdpm, bot, message)
+            Thread(target=auto_delete, args=(bot, update.message, auto)).start()
+            sendPrivate(result + cc + msg_g, bot, message, button)
         if is_gdtot:
             gd.deletefile(link)
         elif is_appdrive:
