@@ -107,7 +107,7 @@ def sendPrivate(text: str, bot, message: Message, reply_markup: InlineKeyboardMa
     b_uname = bot_d.username
     
     try:
-        return bot.send_message(update.message.from_user.id,
+        return bot.send_message(message.from_user.id,
                              reply_to_message_id=message.message_id,
                              text=text, disable_web_page_preview=True, reply_markup=reply_markup, allow_sending_without_reply=True, parse_mode='HTMl')
     except Exception as e:
