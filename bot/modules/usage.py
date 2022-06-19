@@ -70,7 +70,7 @@ def dyno_usage(update, context):
                 "<b>❌ Estimated Expired ❌</b>\n"
                 f"📅 <code>{day}</code> <b>Days</b>",
                 context.bot,
-                update
+                message
             )
             return True
 
