@@ -364,6 +364,12 @@ except KeyError:
     APPDRIVE_PASS = None
     
 try:
+    BOT_PM = getConfig('BOT_PM')
+    BOT_PM = BOT_PM.lower() == 'true'
+except KeyError:
+    BOT_PM = False
+    
+try:
     HEROKU_APP_NAME = getConfig('HEROKU_APP_NAME')
     if len(HEROKU_APP_NAME) == 0:
         raise KeyError
