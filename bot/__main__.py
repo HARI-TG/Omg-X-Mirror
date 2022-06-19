@@ -75,7 +75,7 @@ def start(update, context):
         start_string = f'''
 <b>XTesT BoT is Working.\n\nStill {currentTime}\n\n#BaashaXclouD</b>
 '''
-        sendMessage(start_string, bot, update)
+        sendMessage(start_string, context.bot, update.message)
     else:
         msg1 = f'𝗛𝗲𝘆👋,\n\n𝗧𝗵𝗮𝗻𝗸 𝗬𝗼𝘂 𝗙𝗼𝗿 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗯𝗶𝗻𝗴 𝗺𝗲 𝗫𝟭.\n\n#BaashaXclouD'
         update.effective_message.reply_photo(IMAGE_X, msg1, parse_mode=ParseMode.HTML, reply_markup=reply_markup)
