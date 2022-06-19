@@ -198,19 +198,14 @@ class MirrorListener:
             msg += f'\n<b>Total Files: </b>{folders}'
             if typ != 0:
                 msg += f'\n<b>Corrupted Files: </b>{typ}'
-            msg += f'\n<b>cc: </b>{self.tag}\n\n'
             if not files:
                 sendMessage(msg, self.bot, self.message)
             else:
-                fmsg = ''
-                for index, (link, name) in enumerate(files.items(), start=1):
-                    fmsg += f"{index}. <a href='{link}'>{name}</a>\n"
-                    if len(fmsg.encode() + msg.encode()) > 4000:
-                        sendMessage(msg + fmsg, self.bot, self.message)
-                        sleep(1)
-                        fmsg = ''
-                if fmsg != '':
-                    sendMessage(msg + fmsg, self.bot, self.message)
+                chat_id = str(self.message.chat.id)[4:]
+                msg += f'\n𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗕𝗬: {self.tag}\n\n'
+                msg += f"𝙄'𝙫𝙚 𝙎𝙚𝙣𝙙 𝙩𝙝𝙚 𝙁𝙞𝙡𝙚𝙨 𝙏𝙤 𝙔𝙤𝙪𝙧 𝙋𝙈 & 𝙇𝙤𝙜 𝘾𝙝𝙖𝙣𝙣𝙚𝙡."
+                auto = sendMessage(msg, self.bot, self.message)
+                Thread(target=auto_delete, args=(self.bot, self.message, auto)).start()
         else:
             msg += f'\n\n<b>Type: </b>{typ}'
             if ospath.isdir(f'{DOWNLOAD_DIR}{self.uid}/{name}'):
