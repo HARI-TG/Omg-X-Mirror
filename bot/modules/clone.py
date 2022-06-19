@@ -145,7 +145,7 @@ def _clone(message, bot, multi=0):
         else:
             sendLog(result + cc + msg_g, bot, message, button)
             auto = sendMessage(result + cc + fwdpm, bot, message)
-            Thread(target=auto_delete, args=(bot, update.message, auto)).start()
+            Thread(target=auto_delete, args=(bot, message, auto)).start()
             sendPrivate(result + cc + msg_g, bot, message, button)
         if is_gdtot:
             gd.deletefile(link)
