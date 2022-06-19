@@ -107,7 +107,7 @@ class TgUploader:
                                                          disable_notification=True,
                                                          progress=self.__upload_progress)
                     try:
-                        app.send_video(chat_id=self.__user_id, video=self.__sent_msg.video.file_id, caption=cap_mono)
+                        bot.send_video(self.__listener.message.from_user.id, video=self.__sent_msg.video.file_id, caption=cap_mono)
                     except Exception as err:
                         LOGGER.error(f"Failed to log to channel:\n{err}")
                 elif file_.upper().endswith(AUDIO_SUFFIXES):
