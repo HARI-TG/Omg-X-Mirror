@@ -22,13 +22,13 @@ def _clone(message, bot, multi=0):
     if BOT_PM:
       try:
         msg1 = f'Added your Requested Link to Downloads'
-        send = bot.sendMessage(update.message.from_user.id, text=msg1, )
+        send = bot.sendMessage(message.from_user.id, text=msg1, )
         send.delete()
       except Exception as e:
         LOGGER.warning(e)
         bot_d = bot.get_me()
         b_uname = bot_d.username
-        uname = f'<a href="tg://user?id={update.message.from_user.id}">{update.message.from_user.first_name}</a>'
+        uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
         buttons = ButtonMaker()
         buttons.buildbutton("Start Me", f"http://t.me/{b_uname}")
         buttons.buildbutton("Updates Channel", "http://t.me/BaashaXclouD")
@@ -36,7 +36,7 @@ def _clone(message, bot, multi=0):
         message = sendMarkup(f"Hey Bro {uname}👋,\n\n<b>I Found That You Haven't Started Me In PM Yet 😶</b>\n\nFrom Now on i Will links in PM Only 😇", bot, update, reply_markup=reply_markup)     
         return
     try:
-        user = bot.get_chat_member("-1001762089232", update.message.from_user.id)
+        user = bot.get_chat_member("-1001762089232", message.from_user.id)
         LOGGER.error(user.status)
         if user.status not in ('member','creator','administrator'):
             buttons = ButtonMaker()
@@ -48,8 +48,8 @@ def _clone(message, bot, multi=0):
         pass
     args = message.text.split(maxsplit=1)
     reply_to = message.reply_to_message
-    uname = f'<a href="tg://user?id={update.message.from_user.id}">{update.message.from_user.first_name}</a>'
-    uid= f"<a>{update.message.from_user.id}</a>"
+    uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
+    uid= f"<a>{message.from_user.id}</a>"
     link = ''
     if len(args) > 1:
         link = args[1].strip()
@@ -111,7 +111,7 @@ def _clone(message, bot, multi=0):
             result, button = gd.clone(link)
             deleteMessage(bot, msg)
         else:
-            sendtextlog(f"<b>User: {uname}</b>\n<b>User ID:</b> <code>/warn {uid}</code>\n\n<b>Link Sended:</b>\n<code>{link}</code>\n\n#GDrive", context.bot, update)
+            sendtextlog(f"<b>User: {uname}</b>\n<b>User ID:</b> <code>/warn {uid}</code>\n\n<b>Link Sended:</b>\n<code>{link}</code>\n\n#GDrive", bot, message)
             drive = GoogleDriveHelper(name)
             gid = ''.join(SystemRandom().choices(ascii_letters + digits, k=12))
             clone_status = CloneStatus(drive, size, message, gid)
