@@ -357,47 +357,47 @@ try:
     HEROKU_APP_NAME = getConfig('HEROKU_APP_NAME')
     if len(HEROKU_APP_NAME) == 0:
         raise KeyError
-except KeyError:
-    logging.warning('HEROKU_APP_NAME not provided!')
+except:
+    LOGGER.info('HEROKU_APP_NAME not provided!')
     HEROKU_APP_NAME = None
 
 try:
     HEROKU_API_KEY = getConfig('HEROKU_API_KEY')
     if len(HEROKU_API_KEY) == 0:
         raise KeyError
-except KeyError:
-    logging.warning('HEROKU_API_KEY not provided!')
+except:
+    LOGGER.info('HEROKU_API_KEY not provided!')
     HEROKU_API_KEY = None
 
 try:
     IMAGE_URL = getConfig('IMAGE_URL')
     if len(IMAGE_URL) == 0:
         IMAGE_URL = None
-except KeyError:
+except:
     IMAGE_URL = 'https://telegra.ph/file/f85d8e57d44ea5deb0d69.jpg'
     
 try:
     LOG_CHANNEL = int(getConfig('LOG_CHANNEL'))
     if int(LOG_CHANNEL) == 0:
         raise KeyError
-except KeyError:
-    logging.warning('LOG_CHANNEL not provided!')
+except:
+    LOGGER.info('LOG_CHANNEL not provided!')
     LOG_CHANNEL = None
     
 try:
     LOG_CHANNEL_LOGGER = int(getConfig('LOG_CHANNEL_LOGGER'))
     if int(LOG_CHANNEL_LOGGER) == 0:
         raise KeyError
-except KeyError:
-    logging.warning('LOG_CHANNEL_LOGGER not provided!')
+except:
+    LOGGER.info('LOG_CHANNEL_LOGGER not provided!')
     LOG_CHANNEL_LOGGER = None 
     
 try:
     LOG_LEECH = int(getConfig('LOG_LEECH'))
     if int(LOG_LEECH) == 0:
         raise KeyError
-except KeyError:
-    logging.warning('LOG_LEECH not provided!')
+except:
+    LOGGER.info('LOG_LEECH not provided!')
     LOG_LEECH = None
     
 try:
