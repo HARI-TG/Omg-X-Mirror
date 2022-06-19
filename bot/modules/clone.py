@@ -3,6 +3,8 @@ from string import ascii_letters, digits
 from telegram.ext import CommandHandler
 from threading import Thread
 from time import sleep
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
 
 from bot.helper.mirror_utils.upload_utils.gdriveTools import GoogleDriveHelper
 from bot.helper.telegram_helper.message_utils import sendMessage, sendMarkup, deleteMessage, delete_all_messages, update_all_messages, sendStatusMessage
@@ -41,6 +43,22 @@ def _clone(message, bot, multi=0):
             msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
             link = gdtot(link)
             deleteMessage(bot, msg)
+    is_appdrive = True if "appdrive.in" in link else False
+    if is_appdrive:
+        try:
+            msg = sendMessage(f"💤𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗔𝗽𝗽𝗱𝗿𝗶𝘃𝗲 𝗟𝗶𝗻𝗸: <code>{link}</code>", context.bot, update)
+            LOGGER.info(f"Processing: {link}")
+            apdict = appdrive(link)
+            link = apdict.get('gdrive_link')
+            deleteMessage(context.bot, msg)
+    is_driveapp = True if "driveapp.in" in link else False
+    if is_driveapp:
+        try:
+            msg = sendMessage(f"💤𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗗𝗿𝗶𝘃𝗲𝗮𝗽𝗽 𝗟𝗶𝗻𝗸: <code>{link}</code>", context.bot, update)
+            LOGGER.info(f"Processing: {link}")
+            apdict = appdrive(link)
+            link = apdict.get('gdrive_link')
+            deleteMessage(context.bot, msg)
         except DirectDownloadLinkException as e:
             deleteMessage(bot, msg)
             return sendMessage(str(e), bot, message)
@@ -64,7 +82,7 @@ def _clone(message, bot, multi=0):
             sleep(4)
             Thread(target=_clone, args=(nextmsg, bot, multi)).start()
         if files <= 20:
-            msg = sendMessage(f"Cloning: <code>{link}</code>", bot, message)
+            msg = sendMessage(f"♻️𝗖𝗹𝗼𝗻𝗶𝗻𝗴: <code>{link}</code>", bot, message)
             result, button = gd.clone(link)
             deleteMessage(bot, msg)
         else:
@@ -95,6 +113,10 @@ def _clone(message, bot, multi=0):
             LOGGER.info(f'Cloning Done: {name}')
         if is_gdtot:
             gd.deletefile(link)
+        elif is_appdrive:
+            if apdict.get('link_type') == 'login':
+                LOGGER.info(f"Deleting: {link}")
+                gd.deletefile(link)
     else:
         sendMessage('Send Gdrive or gdtot link along with command or by replying to the link by command', bot, message)
 
