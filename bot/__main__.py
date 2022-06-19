@@ -73,7 +73,7 @@ def start(update, context):
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(1))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
-<b>X{BOT_NO} BoT is Working.\n\nStill {currentTime}\n\n#BaashaXclouD</b>
+<b>XTesT BoT is Working.\n\nStill {currentTime}\n\n#BaashaXclouD</b>
 '''
         sendMessage(start_string, bot, update)
     else:
