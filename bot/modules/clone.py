@@ -43,17 +43,14 @@ def _clone(message, bot, multi=0):
     is_driveapp = is_driveapp_link(link)
     if is_gdtot:
         try:
-            msg = sendMessage(f"💤𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗚𝗗𝗧𝗼𝗧 𝗟𝗶𝗻𝗸: <code>{link}</code>", bot, message)
+            msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
             link = gdtot(link)
             deleteMessage(bot, msg)
-    if is_appdrive:
-        msg = sendMessage(f"💤𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗔𝗽𝗽𝗱𝗿𝗶𝘃𝗲 𝗟𝗶𝗻𝗸: <code>{link}</code>", bot, message)
-        try:
-            apdict = appdrive(link)
-            link = apdict.get('gdrive_link')
+        except DirectDownloadLinkException as e:
             deleteMessage(bot, msg)
-    if is_driveapp:
-        msg = sendMessage(f"💤𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴 𝗗𝗿𝗶𝘃𝗲𝗮𝗽𝗽 𝗟𝗶𝗻𝗸: <code>{link}</code>", bot, message)
+            return sendMessage(str(e), bot, message)
+    if is_appdrive:
+        msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
         try:
             apdict = appdrive(link)
             link = apdict.get('gdrive_link')
