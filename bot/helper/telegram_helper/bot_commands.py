@@ -4,9 +4,9 @@ from bot import CMD_INDEX
 class _BotCommands:
     def __init__(self):
         self.StartCommand = f'start{CMD_INDEX}'
-        self.MirrorCommand = f'mirror{CMD_INDEX}'
-        self.UnzipMirrorCommand = f'unzipmirror{CMD_INDEX}'
-        self.ZipMirrorCommand = f'zipmirror{CMD_INDEX}'
+        self.MirrorCommand = f'mir{CMD_INDEX}'
+        self.UnzipMirrorCommand = f'unzipmir{CMD_INDEX}'
+        self.ZipMirrorCommand = f'zipmir{CMD_INDEX}'
         self.CancelMirror = f'cancel{CMD_INDEX}'
         self.CancelAllCommand = f'cancelall{CMD_INDEX}'
         self.ListCommand = f'list{CMD_INDEX}'
@@ -26,8 +26,8 @@ class _BotCommands:
         self.CountCommand = f'count{CMD_INDEX}'
         self.WatchCommand = f'watch{CMD_INDEX}'
         self.ZipWatchCommand = f'zipwatch{CMD_INDEX}'
-        self.QbMirrorCommand = f'qbmirror{CMD_INDEX}'
-        self.QbUnzipMirrorCommand = f'qbunzipmirror{CMD_INDEX}'
+        self.QbMirrorCommand = f'qbmir{CMD_INDEX}'
+        self.QbUnzipMirrorCommand = f'qbunzipmir{CMD_INDEX}'
         self.QbZipMirrorCommand = f'qbzipmirror{CMD_INDEX}'
         self.DeleteCommand = f'del{CMD_INDEX}'
         self.ShellCommand = f'shell{CMD_INDEX}'
