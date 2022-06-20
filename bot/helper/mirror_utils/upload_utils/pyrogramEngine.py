@@ -36,6 +36,7 @@ class TgUploader:
         self.__is_corrupted = False
         self.__sent_msg = app.get_messages(self.__listener.message.chat.id, self.__listener.uid)
         self.__user_settings()
+        self.__app = app
 
     def upload(self):
         path = f"{DOWNLOAD_DIR}{self.__listener.uid}"
