@@ -202,7 +202,7 @@ class MirrorListener:
                 sendMessage(msg, self.bot, self.message)
             else:
                 msg += f'\n𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗕𝗬: {self.tag}\n\n'
-                msg += f"<b>Time Elapsed:</b>{get_readable_time(time.time() - self.message.date.timestamp())}\n"
+                msg += f"<b>Time Elapsed:</b>{get_readable_time(time() - self.message.date.timestamp())}\n"
                 msg += f"𝙄'𝙫𝙚 𝙎𝙚𝙣𝙙 𝙩𝙝𝙚 𝙁𝙞𝙡𝙚𝙨 𝙏𝙤 𝙔𝙤𝙪𝙧 𝙋𝙈 & 𝙇𝙤𝙜 𝘾𝙝𝙖𝙣𝙣𝙚𝙡."
                 auto = sendMessage(msg, self.bot, self.message)
                 Thread(target=auto_delete, args=(self.bot, self.message, auto)).start()
