@@ -71,6 +71,7 @@ class TgUploader:
             up_path = new_path
         else:
             cap_mono = f"<code>{file_}</code>"
+            pm_cap = f"<b>{file_}</b>"
         notMedia = False
         thumb = self.__thumb
         self.__is_corrupted = False
@@ -99,7 +100,6 @@ class TgUploader:
                     self.__sent_msg = self.__app.send_video(chat_id=LOG_LEECH,
                                                          video=up_path,
                                                          caption=cap_mono + "\n\n#BaashaXclouD",
-                                                         parse_mode="html",
                                                          duration=duration,
                                                          width=width,
                                                          height=height,
@@ -107,11 +107,10 @@ class TgUploader:
                                                          supports_streaming=True,
                                                          disable_notification=True,
                                                          progress=self.__upload_progress)
-                    if BOT_PM:
-                            try:
-                                app.send_video(chat_id=self.__user_id, video=self.__sent_msg.video.file_id, caption=cap_mono)
-                            except Exception as err:
-                                LOGGER.error(f"Failed To Send Video in PM:\n{err}")
+                    try:
+                        app.send_video(self.__listener.message.from_user.id, video=self.__sent_msg.video.file_id, caption=pm_cap)
+                    except Exception as err:
+                        LOGGER.error(f"Failed to log to channel:\n{err}")
                     
                 elif file_.upper().endswith(AUDIO_SUFFIXES):
                     duration , artist, title = get_media_info(up_path)
