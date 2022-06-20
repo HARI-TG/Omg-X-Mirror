@@ -142,10 +142,10 @@ def _clone(message, bot, multi=0):
             msg_g = f"\n\n - 𝗗𝗼𝗻'𝘁 𝗦𝗵𝗮𝗿𝗲 𝘁𝗵𝗲 𝗜𝗻𝗱𝗲𝘅 𝗟𝗶𝗻𝗸"
             fwdpm = f"\n\n𝙄'𝙫𝙚 𝙎𝙚𝙣𝙙 𝙩𝙝𝙚 𝙇𝙞𝙣𝙠𝙨 𝙏𝙤 𝙔𝙤𝙪𝙧 𝙋𝙈 & 𝙇𝙤𝙜 𝘾𝙝𝙖𝙣𝙣𝙚𝙡"
         if button == "cancelled" or button == "":
-            sendMessage(men + result + msgt, bot, message)
+            sendMessage(men + result, bot, message)
         else:
             sendLog(result + cc + msg_g, bot, message, button)
-            auto = sendMessage(result + cc + fwdpm, bot, message)
+            auto = sendMessage(result + cc + msgt + fwdpm, bot, message)
             Thread(target=auto_delete, args=(bot, message, auto)).start()
             sendPrivate(result + cc + msg_g, bot, message, button)
         if is_gdtot:
