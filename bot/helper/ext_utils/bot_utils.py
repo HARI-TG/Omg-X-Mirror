@@ -181,14 +181,14 @@ def get_readable_message():
                 except:
                     pass
                 try:
-                    sg += f"\n<i>qbit🦠</i> | 𝗦𝗲𝗲𝗱𝗲𝗿𝘀: {download.torrent_info().num_seeds}" \
+                    msg += f"\n<i>qbit🦠</i> | 𝗦𝗲𝗲𝗱𝗲𝗿𝘀: {download.torrent_info().num_seeds}" \
                            f" | 𝗟𝗲𝗲𝗰𝗵𝗲𝗿𝘀: {download.torrent_info().num_leechs}"
                 except:
                     pass
                 if download.message.chat.type != 'private':
                     try:
                         chatid = str(download.message.chat.id)[4:]
-                        msg += f'\n<b>Source Msg: </b><a href="https://t.me/c/{chatid}/{download.message.message_id}">Click Here</a>'
+                        msg += f'\n𝗦𝗼𝘂𝗿𝗰𝗲 𝗟𝗶𝗻𝗸: <a href="https://t.me/c/{chatid}/{download.message.message_id}">Click Here</a>'
                     except:
                         pass
                 msg += f'\n<b>𝗨𝘀𝗲𝗿:</b> ️<code>{download.message.from_user.first_name}</code>️(<code>{download.message.from_user.id}</code>)'
@@ -202,7 +202,7 @@ def get_readable_message():
                 msg += f"\n𝗖𝗮𝗻𝗰𝗲𝗹: <code>/{BotCommands.CancelMirror} {download.gid()}</code>\n________________________________"
             else:
                 msg += f"\n𝗦𝗶𝘇𝗲: {download.size()}"
-            msg += "\n\n"
+            msg += "\n"
             if STATUS_LIMIT is not None and index == STATUS_LIMIT:
                 break
         currentTime = get_readable_time(time() - botStartTime)
