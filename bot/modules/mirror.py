@@ -193,11 +193,11 @@ class MirrorListener:
     def onUploadComplete(self, link: str, size, files, folders, typ, name: str):
         if not self.isPrivate and INCOMPLETE_TASK_NOTIFIER and DB_URI is not None:
             DbManger().rm_complete_task(self.message.link)
-        msg = f"<b>Name: </b><code>{escape(name)}</code>\n\n<b>Size: </b>{size}"
+        msg = f"𝗡𝗮𝗺𝗲: <code>{escape(name)}</code>\n\n𝗦𝗶𝘇𝗲: {size}"
         if self.isLeech:
-            msg += f'\n<b>Total Files: </b>{folders}'
+            msg += f'\n𝗧𝗼𝘁𝗮𝗹 𝗙𝗶𝗹𝗲𝘀: {folders}'
             if typ != 0:
-                msg += f'\n<b>Corrupted Files: </b>{typ}'
+                msg += f'\n𝗖𝗼𝗿𝗿𝘂𝗽𝘁𝗲𝗱 𝗙𝗶𝗹𝗲𝘀: {typ}'
             if not files:
                 sendMessage(msg, self.bot, self.message)
             else:
@@ -207,31 +207,25 @@ class MirrorListener:
                 auto = sendMessage(msg, self.bot, self.message)
                 Thread(target=auto_delete, args=(self.bot, self.message, auto)).start()
         else:
-            msg += f'\n\n<b>Type: </b>{typ}'
+            msg += f'\n\n𝗧𝘆𝗽𝗲: {typ}'
             if ospath.isdir(f'{DOWNLOAD_DIR}{self.uid}/{name}'):
-                msg += f'\n<b>SubFolders: </b>{folders}'
-                msg += f'\n<b>Files: </b>{files}'
-            msg += f'\n\n<b>cc: </b>{self.tag}'
+                msg += f'\n𝗦𝘂𝗯𝗙𝗼𝗹𝗱𝗲𝗿𝘀: {folders}'
+                msg += f'\n𝗙𝗶𝗹𝗲𝘀: {files}'
+            msg += f'\n\n𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗕𝗬: {self.tag}'
             buttons = ButtonMaker()
-            buttons.buildbutton("☁️ Drive Link", link)
+            buttons.buildbutton("☁️ 𝗗𝗿𝗶𝘃𝗲 𝗟𝗶𝗻𝗸", link)
             LOGGER.info(f'Done Uploading {name}')
             if INDEX_URL is not None:
                 url_path = rutils.quote(f'{name}')
                 share_url = f'{INDEX_URL}/{url_path}'
                 if ospath.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{name}'):
                     share_url += '/'
-                    buttons.buildbutton("⚡ Index Link", share_url)
+                    buttons.buildbutton("⚡ 𝗜𝗻𝗱𝗲𝘅 𝗟𝗶𝗻𝗸", share_url)
                 else:
-                    buttons.buildbutton("⚡ Index Link", share_url)
+                    buttons.buildbutton("⚡ 𝗜𝗻𝗱𝗲𝘅 𝗟𝗶𝗻𝗸", share_url)
                     if VIEW_LINK:
                         share_urls = f'{INDEX_URL}/{url_path}?a=view'
-                        buttons.buildbutton("🌐 View Link", share_urls)
-            if self.message.from_user.username:
-                uname = f"@{self.message.from_user.username}"
-            else:
-                uname = f'<a href="tg://user?id={self.message.from_user.id}">{self.message.from_user.first_name}</a>'
-            if uname is not None:
-                msg += f'\n\n𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗕𝗬: {uname}'
+                        buttons.buildbutton("🌐 𝗩𝗶𝗲𝘄 𝗟𝗶𝗻𝗸", share_urls)
                 msgt = f"\n\n𝗧𝗶𝗺𝗲 𝗘𝗹𝗮𝗽𝘀𝗲𝗱: <code>{get_readable_time(time() - self.message.date.timestamp())}</code>"
                 msg_g = f"\n\n - 𝗗𝗼𝗻'𝘁 𝗦𝗵𝗮𝗿𝗲 𝘁𝗵𝗲 𝗜𝗻𝗱𝗲𝘅 𝗟𝗶𝗻𝗸"
                 fwdpm = f"\n\n𝙄'𝙫𝙚 𝙎𝙚𝙣𝙙 𝙩𝙝𝙚 𝙇𝙞𝙣𝙠𝙨 𝙏𝙤 𝙔𝙤𝙪𝙧 𝙋𝙈 & 𝙇𝙤𝙜 𝘾𝙝𝙖𝙣𝙣𝙚𝙡"
