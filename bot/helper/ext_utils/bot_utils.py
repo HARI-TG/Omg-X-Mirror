@@ -34,6 +34,9 @@ class MirrorStatus:
     STATUS_CHECKING = "𝗖𝗵𝗲𝗰𝗸𝗶𝗻𝗴𝗨𝗽...📝"
     STATUS_SEEDING = "𝗦𝗲𝗲𝗱𝗶𝗻𝗴...🌧"
 
+PROGRESS_MAX_SIZE = 100 // 10 
+PROGRESS_INCOMPLETE = ['◔', '◔', '◑', '◑', '◑', '◕', '◕']
+
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
 
@@ -107,9 +110,12 @@ def get_progress_bar_string(status):
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 8
-    p_str = '●' * cFull
-    p_str += '○' * (12 - cFull)
-    p_str = f"[{p_str}]"
+    cPart = p % 8 - 1
+    p_str = '⬤' * cFull
+    if cPart >= 0:
+        p_str += PROGRESS_INCOMPLETE[cPart]
+    p_str += '○' * (PROGRESS_MAX_SIZE - cFull)
+    p_str = f"「{p_str}」"
     return p_str
 
 def progress_bar(percentage):
