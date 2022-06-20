@@ -375,7 +375,8 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
                     link = reply_text.strip()
             elif file.mime_type != "application/x-bittorrent" and not isQbit:
                 listener = MirrorListener(bot, message, isZip, extract, isQbit, isLeech, pswd, tag)
-                sendtextlog(f"<b>User: {uname}</b>\n<b>User ID:</b> <code>/warn {uid}</code>\n\nSource File: <a href="https://t.me/c/{chatid}/{download.message.message_id}">Click Here</a>\n\n#TGFile", bot, message)
+                chatid = str(download.message.chat.id)[4:]
+                sendtextlog(f"<b>User: {uname}</b>\n<b>User ID:</b> <code>/warn {uid}</code>\n\nSource Msg: <a href="https://t.me/c/{chatid}/{download.message.message_id}">Click Here</a>\n\n#TGFile", bot, message)
                 Thread(target=TelegramDownloadHelper(listener).add_download, args=(message, f'{DOWNLOAD_DIR}{listener.uid}/', name)).start()
                 if multi > 1:
                     sleep(4)
