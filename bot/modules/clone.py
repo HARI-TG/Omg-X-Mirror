@@ -33,7 +33,7 @@ def _clone(message, bot, multi=0):
         buttons.buildbutton("Start Me", f"http://t.me/{b_uname}")
         buttons.buildbutton("Updates Channel", "http://t.me/BaashaXclouD")
         reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
-        message = sendMarkup(f"Hey Bro {uname}👋,\n\n<b>I Found That You Haven't Started Me In PM Yet 😶</b>\n\nFrom Now on i Will links in PM Only 😇", bot, update, reply_markup=reply_markup)     
+        message = sendMarkup(f"Hey Bro {uname}👋,\n\n<b>I Found That You Haven't Started Me In PM Yet 😶</b>\n\nFrom Now on i Will links in PM Only 😇", bot, message, reply_markup=reply_markup)     
         return
     try:
         user = bot.get_chat_member("-1001762089232", message.from_user.id)
@@ -42,7 +42,7 @@ def _clone(message, bot, multi=0):
             buttons = ButtonMaker()
             buttons.buildbutton("Join Updates Channel", "https://t.me/BaashaXclouD")
             reply_markup = InlineKeyboardMarkup(buttons.build_menu(1))
-            sendMarkup(f"<b>⚠️You Have Not Joined My Updates Channel</b>\n\n<b>Join Immediately to use the Bot.</b>", bot, update, reply_markup)
+            sendMarkup(f"<b>⚠️You Have Not Joined My Updates Channel</b>\n\n<b>Join Immediately to use the Bot.</b>", bot, message, reply_markup)
             return
     except:
         pass
