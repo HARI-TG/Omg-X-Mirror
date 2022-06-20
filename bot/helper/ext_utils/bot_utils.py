@@ -186,8 +186,11 @@ def get_readable_message():
                 except:
                     pass
                 try:
-                    chatid = str(download.message.chat.id)[4:]
-                    msg += f'\n<b>Source Msg: </b><a href="https://t.me/c/{chatid}/{download.message.message_id}">Click Here</a>'
+                    reply_to = download.message.reply_to_message    
+                    if reply_to:
+                        msg += f"\n<b>Source:</b> <a href='https://t.me/c/{chatid}/{reply_to.message_id}'>Link</a>"
+                    else:
+                        msg += f"\n<b>Source:</b> <a href='https://t.me/c/{chatid}/{download.message.message_id}'>Link</a>"
                 except:
                     pass
                 msg += f'\n<b>𝗨𝘀𝗲𝗿:</b> ️<code>{download.message.from_user.first_name}</code>️(<code>{download.message.from_user.id}</code>)'
