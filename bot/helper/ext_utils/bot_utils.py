@@ -1,6 +1,6 @@
 from re import match as re_match, findall as re_findall
 from threading import Thread, Event
-from time import time
+from time import time, sleep
 from math import ceil
 from html import escape
 from psutil import virtual_memory, cpu_percent, disk_usage, net_io_counters
@@ -190,17 +190,17 @@ def get_readable_message():
                     msg += f'\n<b>Source Msg: </b><a href="https://t.me/c/{chatid}/{download.message.message_id}">Click Here</a>'
                 except:
                     pass
-                msg += f'\n<b>User:</b> ️<code>{download.message.from_user.first_name}</code>️(<code>{download.message.from_user.id}</code>)'
+                msg += f'\n<b>𝗨𝘀𝗲𝗿:</b> ️<code>{download.message.from_user.first_name}</code>️(<code>{download.message.from_user.id}</code>)'
                 msg += f"\n𝗖𝗮𝗻𝗰𝗲𝗹: <code>/{BotCommands.CancelMirror} {download.gid()}</code>\n________________________________"
             elif download.status() == MirrorStatus.STATUS_SEEDING:
-                msg += f"\n<b>Size: </b>{download.size()}"
-                msg += f"\n<b>Speed: </b>{get_readable_file_size(download.torrent_info().upspeed)}/s"
-                msg += f" | <b>Uploaded: </b>{get_readable_file_size(download.torrent_info().uploaded)}"
-                msg += f"\n<b>Ratio: </b>{round(download.torrent_info().ratio, 3)}"
-                msg += f" | <b>Time: </b>{get_readable_time(download.torrent_info().seeding_time)}"
-                msg += f"\n<code>/{BotCommands.CancelMirror} {download.gid()}</code>"
+                 msg += f"\n𝗦𝗶𝘇𝗲: {download.size()}"
+                msg += f"\n𝗦𝗽𝗲𝗲𝗱: {get_readable_file_size(download.torrent_info().upspeed)}/s"
+                msg += f" | 𝗨𝗽𝗹𝗼𝗮𝗱𝗲𝗱: {get_readable_file_size(download.torrent_info().uploaded)}"
+                msg += f"\n𝗥𝗮𝘁𝗶𝗼: {round(download.torrent_info().ratio, 3)}"
+                msg += f" | 𝗧𝗶𝗺𝗲: {get_readable_time(download.torrent_info().seeding_time)}"
+                msg += f"\n𝗖𝗮𝗻𝗰𝗲𝗹: <code>/{BotCommands.CancelMirror} {download.gid()}</code>\n________________________________"
             else:
-                msg += f"\n<b>Size: </b>{download.size()}"
+                msg += f"\n𝗦𝗶𝘇𝗲: {download.size()}"
             msg += "\n\n"
             if STATUS_LIMIT is not None and index == STATUS_LIMIT:
                 break
@@ -257,12 +257,16 @@ def bot_sys_stats():
     sent = get_readable_file_size(net_io_counters().bytes_sent)
     stats = f"""
 BOT UPTIME⏰: {currentTime}
+
 CPU: {progress_bar(cpu)} {cpu}%
 RAM: {progress_bar(mem)} {mem}%
 DISK: {progress_bar(disk)} {disk}%
+
 TOTAL: {total}
+
 USED: {used} || FREE: {free}
 SENT: {sent} || RECV: {recv}
+
 #BaashaXclouD
 """
     return stats
@@ -310,6 +314,7 @@ def close(update, context):
         query.message.delete() 
     else:  
         query.answer(text="Nice Try, Get Lost🥱.\n\nOnly Admins can use this.", show_alert=True)
+        
 def get_readable_time(seconds: int) -> str:
     result = ''
     (days, remainder) = divmod(seconds, 86400)
