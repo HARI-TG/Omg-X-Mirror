@@ -3,11 +3,12 @@ from time import sleep, time
 from re import search as re_search
 from telegram import InlineKeyboardMarkup
 from telegram.ext import CallbackQueryHandler
+from threading import Thread
 
 from bot import download_dict, download_dict_lock, BASE_URL, dispatcher, get_client, STOP_DUPLICATE, WEB_PINCODE, QB_SEED, TORRENT_TIMEOUT, LOGGER
 from bot.helper.mirror_utils.status_utils.qbit_download_status import QbDownloadStatus
 from bot.helper.mirror_utils.upload_utils.gdriveTools import GoogleDriveHelper
-from bot.helper.telegram_helper.message_utils import sendMessage, sendMarkup, deleteMessage, sendStatusMessage, update_all_messages
+from bot.helper.telegram_helper.message_utils import sendMessage, sendMarkup, deleteMessage, sendStatusMessage, update_all_messages, auto_delete
 from bot.helper.ext_utils.bot_utils import getDownloadByGid, get_readable_time, setInterval
 from bot.helper.ext_utils.fs_utils import clean_unwanted, get_base_name
 from bot.helper.telegram_helper import button_build
@@ -168,7 +169,8 @@ class QbDownloader:
                     self.client.auth_log_out()
                     self.periodic.cancel()
             elif tor_info.state == 'pausedUP' and QB_SEED:
-                self.__listener.onUploadError(f"Seeding stopped with Ratio: {round(tor_info.ratio, 3)} and Time: {get_readable_time(tor_info.seeding_time)}")
+                qseed = self.__listener.onUploadError(f"Seeding stopped with Ratio: {round(tor_info.ratio, 3)} and Time: {get_readable_time(tor_info.seeding_time)}\n\n#BaashaXclouD")
+                Thread(target=auto_delete, args=(self.bot, self.message, qseed)).start()
                 self.client.torrents_delete(torrent_hashes=self.ext_hash, delete_files=True)
                 self.client.auth_log_out()
                 self.periodic.cancel()
