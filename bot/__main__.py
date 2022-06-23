@@ -212,7 +212,9 @@ def main():
                         chat_id, msg_id = map(int, f)
                     msg = 'Restarted successfully!'
                 else:
-                    msg = 'Bot Restarted!'
+                    kie = datetime.now(pytz.timezone(f'{TIMEZONE}'))
+                    jam = kie.strftime('\n📅 𝗗𝗮𝘁𝗲: %d/%m/%Y\n⏲️ 𝗧𝗶𝗺𝗲: %I:%M%P')
+                    msg = f"𝐗𝟏 𝐁𝐎𝐓 𝐑𝐄𝐒𝐓𝐀𝐑𝐓𝐄𝐃 ⚡️\n{jam}\n\n🗺️ 𝗧𝗶𝗺𝗲𝗭𝗼𝗻𝗲: {TIMEZONE}\n\n𝗣𝗹𝗲𝗮𝘀𝗲 𝗥𝗲-𝗗𝗼𝘄𝗻𝗼𝗮𝗱 𝘁𝗵𝗲 𝗧𝗼𝗿𝗿𝗲𝗻𝘁'𝘀\n\n"
                 for tag, links in data.items():
                      msg += f"\n\n{tag}: "
                      for index, link in enumerate(links, start=1):
