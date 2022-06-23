@@ -63,7 +63,7 @@ def stats(update, context):
             f'<b>Memory Total:</b> {mem_t}\n'\
             f'<b>Memory Free:</b> {mem_a}\n'\
             f'<b>Memory Used:</b> {mem_u}\n'
-    update.effective_message.reply_photo(IMAGE_X, stats, parse_mode=ParseMode.HTML, reply_markup=reply_markup)
+    update.effective_message.reply_photo(IMAGE_X, stats, parse_mode=ParseMode.HTML)
 
 def start(update, context):
     currentTime = get_readable_time(time() - botStartTime)
