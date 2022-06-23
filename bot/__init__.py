@@ -370,6 +370,12 @@ except KeyError:
     BOT_PM = False
     
 try:
+    SOURCE_LINK = getConfig('SOURCE_LINK')
+    SOURCE_LINK = SOURCE_LINK.lower() == 'true'
+except KeyError:
+    SOURCE_LINK = False
+    
+try:
     HEROKU_APP_NAME = getConfig('HEROKU_APP_NAME')
     if len(HEROKU_APP_NAME) == 0:
         raise KeyError
