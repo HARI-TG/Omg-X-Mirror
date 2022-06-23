@@ -170,7 +170,7 @@ class QbDownloader:
                     self.periodic.cancel()
             elif tor_info.state == 'pausedUP' and QB_SEED:
                 qseed = self.__listener.onUploadError(f"Seeding stopped with Ratio: {round(tor_info.ratio, 3)} and Time: {get_readable_time(tor_info.seeding_time)}\n\n#BaashaXclouD")
-                Thread(target=auto_delete, args=(self.bot, self.message, qseed)).start()
+                Thread(target=auto_delete, args=(self.__listener.bot, self.__listener.message, qseed)).start()
                 self.client.torrents_delete(torrent_hashes=self.ext_hash, delete_files=True)
                 self.client.auth_log_out()
                 self.periodic.cancel()
