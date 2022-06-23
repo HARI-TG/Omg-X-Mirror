@@ -76,7 +76,7 @@ def start(update, context):
 '''
         sendMessage(start_string, context.bot, update.message)
     else:
-        msg1 = f'𝗛𝗲𝘆 {tag}👋,\n\n𝗧𝗵𝗮𝗻𝗸 𝗬𝗼𝘂 𝗙𝗼𝗿 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗯𝗶𝗻𝗴 𝗺𝗲 𝗫𝟭.\n\n#BaashaXclouD'
+        msg1 = f'𝗛𝗲𝘆 <a href='tg://user?id={download.message.from_user.id}'>{download.message.from_user.first_name}</a>👋,\n\n𝗧𝗵𝗮𝗻𝗸 𝗬𝗼𝘂 𝗙𝗼𝗿 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗯𝗶𝗻𝗴 𝗺𝗲 𝗫𝟭.\n\n#BaashaXclouD'
         update.effective_message.reply_photo(IMAGE_X, msg1, parse_mode=ParseMode.HTML, reply_markup=reply_markup)
 
 def restart(update, context):
