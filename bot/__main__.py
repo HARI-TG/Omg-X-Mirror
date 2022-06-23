@@ -218,7 +218,7 @@ def main():
                 for tag, links in data.items():
                      msg += f"\n\n{tag}: "
                      for index, link in enumerate(links, start=1):
-                         msg += f" <a href='{link}'>{index}</a> |"
+                         msg += f" <a href='{link}'>{index}</a> |\n\n#BaashaXclouD"
                          if len(msg.encode()) > 4000:
                              if 'Restarted successfully!' in msg and cid == chat_id:
                                  bot.editMessageText(msg, chat_id, msg_id, parse_mode='HTMl', disable_web_page_preview=True)
