@@ -193,9 +193,6 @@ class MirrorListener:
     def onUploadComplete(self, link: str, size, files, folders, typ, name: str):
         if not self.isPrivate and INCOMPLETE_TASK_NOTIFIER and DB_URI is not None:
             DbManger().rm_complete_task(self.message.link)
-        if name.startswith('www'):  
-            name = ' '.join(name.split()[1:])
-            name = '@MSPmoviesOffl' + name.strip('-')
         msg = f"𝗡𝗮𝗺𝗲: <code>{escape(name)}</code>\n\n𝗦𝗶𝘇𝗲: {size}"
         if self.isLeech:
             msg += f'\n𝗧𝗼𝘁𝗮𝗹 𝗙𝗶𝗹𝗲𝘀: {folders}'
