@@ -5,7 +5,7 @@ from pyrogram.errors import FloodWait, RPCError
 from PIL import Image
 from threading import RLock
 
-from bot import DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, EXTENSION_FILTER, app, LOG_LEECH, BOT_PM
+from bot import DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, EXTENSION_FILTER, app, LOG_LEECH, BOT_PM, tgBotMaxFileSize, rss_session
 from bot.helper.ext_utils.fs_utils import take_ss, get_media_info, get_path_size
 from bot.helper.ext_utils.bot_utils import get_readable_file_size
 
@@ -156,7 +156,9 @@ class TgUploader:
                         if self.__thumb is None and thumb is not None and ospath.lexists(thumb):
                             osremove(thumb)
                         return
-                self.__sent_msg = self.__app.send_document(chat_id=LOG_LEECH,
+                if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = rss_session
+                else: usingclient = self.__app
+                self.__sent_msg = usingclient.send_document(chat_id=LOG_LEECH,
                                                         document=up_path,
                                                         thumb=thumb,
                                                         caption=cap_mono + "\n\n#BaashaXclouD",
