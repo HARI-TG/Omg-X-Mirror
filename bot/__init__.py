@@ -234,13 +234,6 @@ try:
     else:
         rss_session.start()
         if (rss_session.get_me()).is_premium:
-            if not LOG_LEECH:
-                LOGGER.error("You must set LEECH_LOG for uploads. Eiting now.")
-                try: rss_session.send_message(OWNER_ID, "You must set LEECH_LOG for uploads. Bot is closing. Bye.")
-                except Exception as e: LOGGER.exception(e)
-                rss_session.stop()
-                app.stop()
-                exit(1)
             TG_SPLIT_SIZE = 4194304000
             LOGGER.info("Premium user detected. Upload limit is 4GB now.")
         elif (not DB_URI) or (not RSS_CHAT_ID):
