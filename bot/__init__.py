@@ -165,8 +165,27 @@ try:
     if len(USER_SESSION_STRING) == 0:
         raise KeyError
     rss_session = Client(name='rss_session', api_id=int(TELEGRAM_API), api_hash=TELEGRAM_HASH, session_string=USER_SESSION_STRING, parse_mode=enums.ParseMode.HTML, no_updates=True)
+    if not rss_session:
+        LOGGER.error("Cannot initialized User Session. Please regenerate USER_SESSION_STRING")
+    else:
+        rss_session.start()
+        if (rss_session.get_me()).is_premium:
+            if not LEECH_LOG:
+                LOGGER.error("You must set LEECH_LOG for uploads. Eiting now.")
+                try: rss_session.send_message(OWNER_ID, "You must set LEECH_LOG for uploads. Bot is closing. Bye.")
+                except Exception as e: LOGGER.exception(e)
+                rss_session.stop()
+                app.stop()
+                exit(1)
+            TG_SPLIT_SIZE = 4194304000
+            LOGGER.info("Premium user detected. Upload limit is 4GB now.")
+        elif (not DB_URI) or (not RSS_CHAT_ID):
+            rss_session.stop()
+            LOGGER.info(f"Not using rss. if you want to use fill RSS_CHAT_ID and DB_URI variables.")
 except:
+    USER_SESSION_STRING = None
     rss_session = None
+LOGGER.info(f"TG_SPLIT_SIZE: {TG_SPLIT_SIZE}")
 
 def aria2c_init():
     try:
