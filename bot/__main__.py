@@ -155,8 +155,6 @@ help_string_telegraph = f'''<br>
 <br><br>
 <b>/{BotCommands.SetThumbCommand}</b>: Reply photo to set it as Thumbnail
 <br><br>
-<b>/{BotCommands.QbSelectCommand}</b>: Reply to an active /qbcmd which was used to start the qb-download or add gid along with cmd. This command mainly for selection incase you decided to select files from already added qb-torrent. But you can always use /qbcmd with arg `s` to select files before download start
-<br><br>
 <b>/{BotCommands.RssListCommand}</b>: List all subscribed rss feed info
 <br><br>
 <b>/{BotCommands.RssGetCommand}</b>: [Title] [Number](last N links): Force fetch last N links
