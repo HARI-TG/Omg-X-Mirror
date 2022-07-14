@@ -65,8 +65,10 @@ class TgUploader:
     def __upload_file(self, up_path, file_, dirpath):
         file_  = '' 
         if file_.startswith('www'):  
-        file_ = ''.join(file_.split()[1:])
-        file_ = '@MSPmoviesOffl ' + file_.strip('-')
+            file_ = ''.join(file_.split()[1:])
+            file_ = '@MSPmoviesOffl ' + file_.strip('-')
+        else:
+            file_ = f'{file_}'
         if CUSTOM_FILENAME is not None:
             cap_mono = f"{CUSTOM_FILENAME} <code>{file_}</code>"
             file_ = f"{CUSTOM_FILENAME} {file_}"
