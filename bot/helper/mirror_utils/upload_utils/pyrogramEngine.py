@@ -66,7 +66,9 @@ class TgUploader:
         if file_.startswith('www'):  
             file_ = ' '.join(file_.split()[1:])
             file_ = '@MSPmoviesOffl ' + file_.strip('-')
-            file_ = f"{file_}"
+            new_path = ospath.join(dirpath, file_)
+            osrename(up_path, new_path)
+            up_path = new_path
         else:
             cap_mono = f"<code>{file_}</code>"
             pm_cap = f"<b>{file_}</b>"
