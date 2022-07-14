@@ -64,8 +64,9 @@ class TgUploader:
 
     def __upload_file(self, up_path, file_, dirpath):
         if file_.startswith('www'):  
-            file_ = ''.join(file_.split()[1:])
+            file_ = ' '.join(file_.split()[1:])
             file_ = '@MSPmoviesOffl ' + file_.strip('-')
+            file_ = f"{file_}"
         else:
             cap_mono = f"<code>{file_}</code>"
             pm_cap = f"<b>{file_}</b>"
