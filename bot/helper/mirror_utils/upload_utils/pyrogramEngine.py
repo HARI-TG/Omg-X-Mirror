@@ -108,7 +108,7 @@ class TgUploader:
                         up_path = new_path
                     if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = rss_session
                         else: usingclient = self.__app
-                    self.__sent_msg = self.__app.send_video(chat_id=LOG_LEECH,
+                    self.__sent_msg = usingclient.send_video(chat_id=LOG_LEECH,
                                                          video=up_path,
                                                          caption=cap_mono + "\n\n#BaashaXclouD",
                                                          duration=duration,
@@ -127,7 +127,7 @@ class TgUploader:
                     duration , artist, title = get_media_info(up_path)
                     if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = rss_session
                         else: usingclient = self.__app
-                    self.__sent_msg = self.__app.send_audio(chat_id=LOG_LEECH,
+                    self.__sent_msg = usingclient.send_audio(chat_id=LOG_LEECH,
                                                          audio=up_path,
                                                          caption=cap_mono + "\n\n#BaashaXclouD",
                                                          duration=duration,
@@ -143,7 +143,7 @@ class TgUploader:
                 elif file_.upper().endswith(IMAGE_SUFFIXES):
                     if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = rss_session
                         else: usingclient = self.__app
-                    self.__sent_msg = self.__app.send_photo(chat_id=LOG_LEECH,
+                    self.__sent_msg = usingclient.send_photo(chat_id=LOG_LEECH,
                                                          photo=up_path,
                                                          caption=cap_mono + "\n\n#BaashaXclouD",
                                                          disable_notification=True,
