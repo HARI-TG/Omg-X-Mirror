@@ -106,6 +106,8 @@ class TgUploader:
                         new_path = ospath.join(dirpath, file_)
                         osrename(up_path, new_path)
                         up_path = new_path
+                    if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = rss_session
+                        else: usingclient = self.__app
                     self.__sent_msg = self.__app.send_video(chat_id=LOG_LEECH,
                                                          video=up_path,
                                                          caption=cap_mono + "\n\n#BaashaXclouD",
@@ -123,6 +125,8 @@ class TgUploader:
                     
                 elif file_.upper().endswith(AUDIO_SUFFIXES):
                     duration , artist, title = get_media_info(up_path)
+                    if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = rss_session
+                        else: usingclient = self.__app
                     self.__sent_msg = self.__app.send_audio(chat_id=LOG_LEECH,
                                                          audio=up_path,
                                                          caption=cap_mono + "\n\n#BaashaXclouD",
@@ -133,17 +137,19 @@ class TgUploader:
                                                          disable_notification=True,
                                                          progress=self.__upload_progress)
                     try:
-                        app.send_audio(self.__listener.message.from_user.id, audio=self.__sent_msg.audio.file_id, caption=pm_cap)
+                        app.copy_message(chat_id=self.__user_id, from_chat_id=self.__sent_msg.chat.id, message_id=self.__sent_msg.id)
                     except Exception as err:
                         LOGGER.error(f"Failed to send audio to PM:\n{err}")
                 elif file_.upper().endswith(IMAGE_SUFFIXES):
+                    if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = rss_session
+                        else: usingclient = self.__app
                     self.__sent_msg = self.__app.send_photo(chat_id=LOG_LEECH,
                                                          photo=up_path,
                                                          caption=cap_mono + "\n\n#BaashaXclouD",
                                                          disable_notification=True,
                                                          progress=self.__upload_progress)
                     try:
-                        app.send_photo(self.__listener.message.from_user.id, photo=self.__sent_msg.photo.file_id, caption=pm_cap)
+                        app.copy_message(chat_id=self.__user_id, from_chat_id=self.__sent_msg.chat.id, message_id=self.__sent_msg.id)
                         deleteMessage(bot, self.__sent_msg)
                     except Exception as err:
                         LOGGER.error(f"Failed to send image to PM:\n{err}")
@@ -165,7 +171,7 @@ class TgUploader:
                                                         disable_notification=True,
                                                         progress=self.__upload_progress)
                 try:
-                    app.send_document(self.__listener.message.from_user.id, document=self.__sent_msg.document.file_id, caption=pm_cap)
+                    app.copy_message(chat_id=self.__user_id, from_chat_id=self.__sent_msg.chat.id, message_id=self.__sent_msg.id)
                 except Exception as err:
                     LOGGER.error(f"Failed to send document in PM:\n{err}")
         except FloodWait as f:
