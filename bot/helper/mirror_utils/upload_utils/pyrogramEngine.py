@@ -107,7 +107,7 @@ class TgUploader:
                         osrename(up_path, new_path)
                         up_path = new_path
                     if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = rss_session
-                        else: usingclient = self.__app
+                    else: usingclient = self.__app
                     self.__sent_msg = usingclient.send_video(chat_id=LOG_LEECH,
                                                          video=up_path,
                                                          caption=cap_mono + "\n\n#BaashaXclouD",
@@ -126,7 +126,7 @@ class TgUploader:
                 elif file_.upper().endswith(AUDIO_SUFFIXES):
                     duration , artist, title = get_media_info(up_path)
                     if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = rss_session
-                        else: usingclient = self.__app
+                    else: usingclient = self.__app
                     self.__sent_msg = usingclient.send_audio(chat_id=LOG_LEECH,
                                                          audio=up_path,
                                                          caption=cap_mono + "\n\n#BaashaXclouD",
@@ -142,7 +142,7 @@ class TgUploader:
                         LOGGER.error(f"Failed to send audio to PM:\n{err}")
                 elif file_.upper().endswith(IMAGE_SUFFIXES):
                     if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = rss_session
-                        else: usingclient = self.__app
+                    else: usingclient = self.__app
                     self.__sent_msg = usingclient.send_photo(chat_id=LOG_LEECH,
                                                          photo=up_path,
                                                          caption=cap_mono + "\n\n#BaashaXclouD",
