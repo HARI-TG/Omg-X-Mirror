@@ -5,7 +5,7 @@ from pyrogram.errors import FloodWait, RPCError
 from PIL import Image
 from threading import RLock
 
-from bot import DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, EXTENSION_FILTER, app, LOG_LEECH, BOT_PM, tgBotMaxFileSize, rss_session
+from bot import DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, EXTENSION_FILTER, app, LOG_LEECH, BOT_PM, tgBotMaxFileSize, rss_session, BOT_PM
 from bot.helper.ext_utils.fs_utils import take_ss, get_media_info, get_path_size
 from bot.helper.ext_utils.bot_utils import get_readable_file_size
 
@@ -170,10 +170,24 @@ class TgUploader:
                                                         caption=cap_mono + "\n\n#BaashaXclouD",
                                                         disable_notification=True,
                                                         progress=self.__upload_progress)
-                try:
-                    app.copy_message(chat_id=self.__user_id, from_chat_id=self.__sent_msg.chat.id, message_id=self.__sent_msg.id)
-                except Exception as err:
-                    LOGGER.error(f"Failed to send document in PM:\n{err}")
+                if BOT_PM:
+                            try:
+                                app.copy_message(chat_id=self.__user_id, from_chat_id=self.__sent_msg.chat.id, message_id=self.__sent_msg.id)
+                            except Exception as err:
+                                LOGGER.error(f"Failed To Send Document in PM:\n{err}")
+                else:
+                    self.__sent_msg = self.__sent_msg.reply_document(document=up_path,
+                                                                     quote=True,
+                                                                     thumb=thumb,
+                                                                     caption=cap_mono,
+                                                                     disable_notification=True,
+                                                                     progress=self.__upload_progress)
+                    if not self.isPrivate and BOT_PM:
+                        try:
+                            app.send_document(chat_id=self.__user_id, document=self.__sent_msg.document.file_id,
+                                              caption=cap_mono)
+                        except Exception as err:
+                            LOGGER.error(f"Failed To Send Document in PM:\n{err}")
         except FloodWait as f:
             LOGGER.warning(str(f))
             sleep(f.value)
