@@ -37,6 +37,7 @@ class TgUploader:
         self.__sent_msg = app.get_messages(self.__listener.message.chat.id, self.__listener.uid)
         self.__user_settings()
         self.__app = app
+        self.__user_id = listener.message.from_user.id
         self.isPrivate = listener.message.chat.type in ['private', 'group']
 
     def upload(self):
@@ -71,6 +72,7 @@ class TgUploader:
             osrename(up_path, new_path)
             up_path = new_path
         else:
+            file_ = f"@MSPmoviesOffl {file_}"
             cap_mono = f"<code>{file_}</code>"
             pm_cap = f"<b>{file_}</b>"
         if CUSTOM_FILENAME is not None:
