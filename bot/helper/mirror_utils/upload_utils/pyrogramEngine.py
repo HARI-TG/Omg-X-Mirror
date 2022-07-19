@@ -72,7 +72,6 @@ class TgUploader:
             osrename(up_path, new_path)
             up_path = new_path
         else:
-            file_ = f"@MSPmoviesOffl {file_}"
             cap_mono = f"<code>{file_}</code>"
             pm_cap = f"<b>{file_}</b>"
         if CUSTOM_FILENAME is not None:
@@ -122,7 +121,7 @@ class TgUploader:
                                                          disable_notification=True,
                                                          progress=self.__upload_progress)
                     try:
-                        app.send_video(self.__listener.message.from_user.id, video=self.__sent_msg.video.file_id, caption=pm_cap)
+                        app.copy_message(chat_id=self.__user_id, from_chat_id=self.__sent_msg.chat.id, message_id=self.__sent_msg.id)
                     except Exception as err:
                         LOGGER.error(f"Failed to send video to PM:\n{err}")
                     
@@ -132,7 +131,7 @@ class TgUploader:
                     else: usingclient = self.__app
                     self.__sent_msg = usingclient.send_audio(chat_id=LOG_LEECH,
                                                          audio=up_path,
-                                                         caption=cap_mono + "\n\n#BaashaXclouD",
+                                                         caption=cap_mono,
                                                          duration=duration,
                                                          performer=artist,
                                                          title=title,
@@ -153,7 +152,6 @@ class TgUploader:
                                                          progress=self.__upload_progress)
                     try:
                         app.copy_message(chat_id=self.__user_id, from_chat_id=self.__sent_msg.chat.id, message_id=self.__sent_msg.id)
-                        deleteMessage(bot, self.__sent_msg)
                     except Exception as err:
                         LOGGER.error(f"Failed to send image to PM:\n{err}")
                 else:
@@ -170,27 +168,13 @@ class TgUploader:
                 self.__sent_msg = usingclient.send_document(chat_id=LOG_LEECH,
                                                         document=up_path,
                                                         thumb=thumb,
-                                                        caption=cap_mono + "\n\n#BaashaXclouD",
+                                                        caption=cap_mono,
                                                         disable_notification=True,
                                                         progress=self.__upload_progress)
-                if BOT_PM:
-                            try:
-                                app.copy_message(chat_id=self.__user_id, from_chat_id=self.__sent_msg.chat.id, message_id=self.__sent_msg.id)
-                            except Exception as err:
-                                LOGGER.error(f"Failed To Send Document in PM:\n{err}")
-                else:
-                    self.__sent_msg = self.__sent_msg.reply_document(document=up_path,
-                                                                     quote=True,
-                                                                     thumb=thumb,
-                                                                     caption=cap_mono,
-                                                                     disable_notification=True,
-                                                                     progress=self.__upload_progress)
-                    if not self.isPrivate and BOT_PM:
-                        try:
-                            app.send_document(chat_id=self.__user_id, document=self.__sent_msg.document.file_id,
-                                              caption=cap_mono)
-                        except Exception as err:
-                            LOGGER.error(f"Failed To Send Document in PM:\n{err}")
+                try:
+                    app.copy_message(chat_id=self.__user_id, from_chat_id=self.__sent_msg.chat.id, message_id=self.__sent_msg.id)
+                except Exception as err:
+                    LOGGER.error(f"Failed to log to channel:\n{err}")
         except FloodWait as f:
             LOGGER.warning(str(f))
             sleep(f.value)
