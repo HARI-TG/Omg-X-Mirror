@@ -171,7 +171,7 @@ class TgUploader:
                                                         disable_notification=True,
                                                         progress=self.__upload_progress)
                 try:
-                    usingclient.send_document(self.__listener.message.from_user.id, document=self.__sent_msg.document.file_id, caption=pm_cap)
+                    app.copy_message(chat_id=self.__user_id, from_chat_id=self.__sent_msg.chat.id, message_id=self.__sent_msg.id)
                 except Exception as err:
                     LOGGER.error(f"Failed to send document in PM:\n{err}")
         except FloodWait as f:
