@@ -35,15 +35,15 @@ class MirrorStatus:
     STATUS_SEEDING = "𝗦𝗲𝗲𝗱𝗶𝗻𝗴...🌧"
 
 class EngineStatus:
-    STATUS_ARIA = "Aria2c"
-    STATUS_GDRIVE = "Google API"
-    STATUS_MEGA = "Mega API"
-    STATUS_QB = "qBittorrent"
-    STATUS_TG = "Pyrogram"
-    STATUS_YT = "Yt-dlp"
-    STATUS_EXT = "extract | pextract"
-    STATUS_SPLIT = "FFmpeg"
-    STATUS_ZIP = "7z"
+    STATUS_ARIA = "Aria2c📶"
+    STATUS_GDRIVE = "Google API♻️"
+    STATUS_MEGA = "Mega API⭕️"
+    STATUS_QB = "qBittorrent🦠"
+    STATUS_TG = "Pyrogram💥"
+    STATUS_YT = "Yt-dlp🌟"
+    STATUS_EXT = "extract | pextract⚔️"
+    STATUS_SPLIT = "FFmpeg✂️"
+    STATUS_ZIP = "7z🛠"
 
 PROGRESS_MAX_SIZE = 100 // 10 
 PROGRESS_INCOMPLETE = ['◔', '◔', '◑', '◑', '◑', '◕', '◕']
@@ -194,12 +194,12 @@ def get_readable_message():
                     msg += f"\n𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱: {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 msg += f"\n𝗦𝗽𝗲𝗲𝗱: {download.speed()} | 𝗘𝗧𝗔: {download.eta()}"
                 try:
-                    msg += f"\n<i>Aria2📶</i> | 𝗦𝗲𝗲𝗱𝗲𝗿𝘀: {download.aria_download().num_seeders}" \
+                    msg += f"\n𝗦𝗲𝗲𝗱𝗲𝗿𝘀: {download.aria_download().num_seeders}" \
                            f" | 𝗣𝗲𝗲𝗿𝘀: {download.aria_download().connections}"
                 except:
                     pass
                 try:
-                    msg += f"\n<i>qbit🦠</i> | 𝗦𝗲𝗲𝗱𝗲𝗿𝘀: {download.torrent_info().num_seeds}" \
+                    msg += f"\n𝗦𝗲𝗲𝗱𝗲𝗿𝘀: {download.torrent_info().num_seeds}" \
                            f" | 𝗟𝗲𝗲𝗰𝗵𝗲𝗿𝘀: {download.torrent_info().num_leechs}"
                 except:
                     pass
