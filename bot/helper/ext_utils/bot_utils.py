@@ -34,6 +34,17 @@ class MirrorStatus:
     STATUS_CHECKING = "𝗖𝗵𝗲𝗰𝗸𝗶𝗻𝗴𝗨𝗽...📝"
     STATUS_SEEDING = "𝗦𝗲𝗲𝗱𝗶𝗻𝗴...🌧"
 
+class EngineStatus:
+    STATUS_ARIA = "Aria2c"
+    STATUS_GDRIVE = "Google API"
+    STATUS_MEGA = "Mega API"
+    STATUS_QB = "qBittorrent"
+    STATUS_TG = "Pyrogram"
+    STATUS_YT = "Yt-dlp"
+    STATUS_EXT = "extract | pextract"
+    STATUS_SPLIT = "FFmpeg"
+    STATUS_ZIP = "7z"
+
 PROGRESS_MAX_SIZE = 100 // 10 
 PROGRESS_INCOMPLETE = ['◔', '◔', '◑', '◑', '◑', '◕', '◕']
 
@@ -167,6 +178,7 @@ def get_readable_message():
         for index, download in enumerate(list(download_dict.values())[COUNT:], start=1):
             msg += f"\n𝗙𝗶𝗹𝗲𝗻𝗮𝗺𝗲: <code>{download.name()}</code>"
             msg += f"\n𝗦𝘁𝗮𝘁𝘂𝘀: <i>{download.status()}</i>"
+            msg += f"\n𝗘𝗻𝗴𝗶𝗻𝗲: {download.eng()}"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
                 MirrorStatus.STATUS_EXTRACTING,
