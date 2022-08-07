@@ -344,7 +344,7 @@ def refresh(update, context):
     query = update.callback_query
     user_id = update.callback_query.from_user.id
     first = update.callback_query.from_user.first_name
-    query.edit_message_text(text=f"**{first}** Refreshing...👻")
+    query.edit_message_text(text=f"{first} Refreshing...👻")
     sleep(2)
     update_all_messages()
     query.answer(text="Refreshed", show_alert=False)
