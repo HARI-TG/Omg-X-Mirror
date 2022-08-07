@@ -7,6 +7,7 @@ from psutil import virtual_memory, cpu_percent, disk_usage, net_io_counters
 from requests import head as rhead
 from urllib.request import urlopen
 from telegram import InlineKeyboardMarkup
+from telegram.message import Message
 from telegram.ext import CallbackQueryHandler
 
 from bot.helper.telegram_helper.bot_commands import BotCommands
