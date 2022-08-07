@@ -152,6 +152,29 @@ def progress_bar(percentage):
             pr += ncomp
     return pr
 
+def update_all_messages(force=False):
+    with status_reply_dict_lock:
+        if not force and (not status_reply_dict or not Interval or time() - list(status_reply_dict.values())[0][1] < 3):
+            return
+        for chat_id in status_reply_dict:
+            status_reply_dict[chat_id][1] = time()
+
+    msg, buttons = get_readable_message()
+    if msg is None:
+        return
+    with status_reply_dict_lock:
+        for chat_id in status_reply_dict:
+            if status_reply_dict[chat_id] and msg != status_reply_dict[chat_id][0].text:
+                if buttons == "":
+                    rmsg = editMessage(msg, status_reply_dict[chat_id][0])
+                else:
+                    rmsg = editMessage(msg, status_reply_dict[chat_id][0], buttons)
+                if rmsg == "Message to edit not found":
+                    del status_reply_dict[chat_id]
+                    return
+                status_reply_dict[chat_id][0].text = msg
+                status_reply_dict[chat_id][1] = time()
+                
 def get_readable_message():
     with download_dict_lock:
         dlspeed_bytes = 0
@@ -318,8 +341,9 @@ def refresh(update, context):
     chat_id  = update.effective_chat.id
     query = update.callback_query
     user_id = update.callback_query.from_user.id
-    query.edit_message_text(text="𝗥𝗲𝗳𝗿𝗲𝘀𝗵𝗶𝗻𝗴...👻")
-    sleep(1)
+    query.edit_message_text(text="**{update.callback_query.from_user.first_name}** 𝗥𝗲𝗳𝗿𝗲𝘀𝗵𝗶𝗻𝗴...👻")
+    sleep(2)
+    update_all_messages()
     query.answer(text="Refreshed", show_alert=False)
     
 def close(update, context):  
