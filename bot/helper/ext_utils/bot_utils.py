@@ -152,6 +152,19 @@ def progress_bar(percentage):
             pr += ncomp
     return pr
 
+def editMessage(text: str, message: Message, reply_markup=None):
+    try:
+        bot.editMessageText(text=text, message_id=message.message_id,
+                              chat_id=message.chat.id,reply_markup=reply_markup,
+                              parse_mode='HTMl', disable_web_page_preview=True)
+    except RetryAfter as r:
+        LOGGER.warning(str(r))
+        sleep(r.retry_after * 1.5)
+        return editMessage(text, message, reply_markup)
+    except Exception as e:
+        LOGGER.error(str(e))
+        return str(e)
+
 def update_all_messages(force=False):
     with status_reply_dict_lock:
         if not force and (not status_reply_dict or not Interval or time() - list(status_reply_dict.values())[0][1] < 3):
