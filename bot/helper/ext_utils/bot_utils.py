@@ -343,7 +343,8 @@ def refresh(update, context):
     chat_id  = update.effective_chat.id
     query = update.callback_query
     user_id = update.callback_query.from_user.id
-    query.edit_message_text(text="**{update.callback_query.from_user.first_name}** 𝗥𝗲𝗳𝗿𝗲𝘀𝗵𝗶𝗻𝗴...👻")
+    first = update.callback_query.from_user.first_name
+    query.edit_message_text(text=f"**{first}** 𝗥𝗲𝗳𝗿𝗲𝘀𝗵𝗶𝗻𝗴...👻")
     sleep(2)
     update_all_messages()
     query.answer(text="Refreshed", show_alert=False)
