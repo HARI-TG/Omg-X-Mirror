@@ -29,6 +29,8 @@ basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 
 LOGGER = getLogger(__name__)
 
+PRE_DICT = {}
+
 load_dotenv('config.env', override=True)
 
 def getConfig(name: str):
