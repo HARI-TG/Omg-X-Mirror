@@ -5,7 +5,7 @@ from pyrogram.errors import FloodWait, RPCError
 from PIL import Image
 from threading import RLock
 
-from bot import DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, EXTENSION_FILTER, app, LOG_LEECH, BOT_PM, tgBotMaxFileSize, rss_session, BOT_PM
+from bot import DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, EXTENSION_FILTER, app, LOG_LEECH, BOT_PM, tgBotMaxFileSize, rss_session, BOT_PM, PRE_DICT
 from bot.helper.ext_utils.fs_utils import take_ss, get_media_info, get_path_size
 from bot.helper.ext_utils.bot_utils import get_readable_file_size
 
@@ -65,9 +65,11 @@ class TgUploader:
         self.__listener.onUploadComplete(None, size, self.__msgs_dict, self.__total_files, self.__corrupted, self.name)
 
     def __upload_file(self, up_path, file_, dirpath):
+        prefix = PRE_DICT.get(self.__listener.message.from_user.id, "")
+        PRENAME_X = prefix
         if file_.startswith('www'):  
             file_ = ' '.join(file_.split()[1:])
-            file_ = '@MSPmoviesOffl' + file_.strip('-').strip('_')
+            file_ = f"{PRENAME_X}"+ file_.strip('-').strip('_')
             new_path = ospath.join(dirpath, file_)
             osrename(up_path, new_path)
             up_path = new_path
