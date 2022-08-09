@@ -199,7 +199,7 @@ class MirrorListener:
         if file_.startswith('www'):  
             file_ = ' '.join(file_.split()[1:])
             file_ = f"{PRENAME_X}"+ file_.strip('-').strip('_')
-        lmsg = f"𝗡𝗮𝗺𝗲: <code>{escape(name)}</code>\n\n𝗦𝗶𝘇𝗲: {size}"
+        lmsg = f"𝗡𝗮𝗺𝗲: <code>{file_}</code>\n\n𝗦𝗶𝘇𝗲: {size}"
         if self.isLeech:
             msg = f'\n𝗧𝗼𝘁𝗮𝗹 𝗙𝗶𝗹𝗲𝘀: {folders}'
             if typ != 0:
