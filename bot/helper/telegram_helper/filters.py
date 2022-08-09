@@ -29,10 +29,6 @@ class CustomFilters:
 
     sudo_user = __SudoUser()
 
-    @staticmethod
-    def _owner_query(user_id):
-        return user_id == OWNER_ID or user_id in SUDO_USERS
-    
     class _MirrorTorrentsAndMagnets(MessageFilter):
         def filter(self, message: Message):
             
@@ -63,4 +59,9 @@ class CustomFilters:
             return a and b
 
     mirror_torrent_and_magnets = _MirrorTorrentsAndMagnets()
+    
+    @staticmethod
+    def _owner_query(user_id):
+        return user_id == OWNER_ID or user_id in SUDO_USERS
+   
 
