@@ -12,7 +12,7 @@ from telegram.ext import CommandHandler
 from telegram import InlineKeyboardMarkup
 
 from bot import Interval, INDEX_URL, VIEW_LINK, aria2, QB_SEED, dispatcher, DOWNLOAD_DIR, \
-                download_dict, download_dict_lock, TG_SPLIT_SIZE, LOGGER, MEGA_KEY, DB_URI, INCOMPLETE_TASK_NOTIFIER, BOT_PM
+                download_dict, download_dict_lock, TG_SPLIT_SIZE, LOGGER, MEGA_KEY, DB_URI, INCOMPLETE_TASK_NOTIFIER, BOT_PM, PRE_DICT
 from bot.helper.ext_utils.bot_utils import is_url, is_magnet, is_gdtot_link, is_mega_link, is_gdrive_link, get_content_type, get_readable_time
 from bot.helper.ext_utils.fs_utils import get_base_name, get_path_size, split_file, clean_download
 from bot.helper.ext_utils.exceptions import DirectDownloadLinkException, NotSupportedExtractionArchive
@@ -193,13 +193,19 @@ class MirrorListener:
     def onUploadComplete(self, link: str, size, files, folders, typ, name: str):
         if not self.isPrivate and INCOMPLETE_TASK_NOTIFIER and DB_URI is not None:
             DbManger().rm_complete_task(self.message.link)
-        msg = f"𝗡𝗮𝗺𝗲: <code>{escape(name)}</code>\n\n𝗦𝗶𝘇𝗲: {size}"
+        prefix = PRE_DICT.get(self.message.from_user.id, "")
+        PRENAME_X = prefix
+        file_ = escape(name)
+        if file_.startswith('www'):  
+            file_ = ' '.join(file_.split()[1:])
+            file_ = f"{PRENAME_X}"+ file_.strip('-').strip('_')
+        lmsg = f"𝗡𝗮𝗺𝗲: <code>{escape(name)}</code>\n\n𝗦𝗶𝘇𝗲: {size}"
         if self.isLeech:
             msg += f'\n𝗧𝗼𝘁𝗮𝗹 𝗙𝗶𝗹𝗲𝘀: {folders}'
             if typ != 0:
                 msg += f'\n𝗖𝗼𝗿𝗿𝘂𝗽𝘁𝗲𝗱 𝗙𝗶𝗹𝗲𝘀: {typ}'
             if not files:
-                sendMessage(msg, self.bot, self.message)
+                sendMessage(lmsg + msg, self.bot, self.message)
             else:
                 msg += f'\n𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗕𝗬: {self.tag}\n\n'
                 msg += f"𝗧𝗶𝗺𝗲 𝗘𝗹𝗮𝗽𝘀𝗲𝗱: <code>{get_readable_time(time() - self.message.date.timestamp())}</code>\n\n"
@@ -207,6 +213,7 @@ class MirrorListener:
                 auto = sendMessage(msg, self.bot, self.message)
                 Thread(target=auto_delete, args=(self.bot, self.message, auto)).start()
         else:
+            msg = f"𝗡𝗮𝗺𝗲: <code>{escape(name)}</code>\n\n𝗦𝗶𝘇𝗲: {size}"
             msg += f'\n\n𝗧𝘆𝗽𝗲: {typ}'
             if ospath.isdir(f'{DOWNLOAD_DIR}{self.uid}/{name}'):
                 msg += f'\n𝗦𝘂𝗯𝗙𝗼𝗹𝗱𝗲𝗿𝘀: {folders}'
