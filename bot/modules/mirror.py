@@ -212,7 +212,7 @@ class MirrorListener:
             else:
                 fmsg = '\n𝗬𝗼𝘂𝗿 𝗙𝗶𝗹𝗲𝘀 𝗔𝗿𝗲👇\n'
                 for index, (link, name) in enumerate(files.items(), start=1):
-                    fmsg += f"{index}. <a href='{link}'>{name}</a>\n"
+                    fmsg += f"{index}. <a href='{link}'>{file_}</a>\n"
                     if len(fmsg.encode() + msg.encode()) > 4000:
                         sendMessage(msg + fmsg, self.bot, self.message)
                         sleep(1)
