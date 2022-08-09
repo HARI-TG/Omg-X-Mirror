@@ -1,7 +1,7 @@
 from telegram.ext import MessageFilter
 from telegram import Message
 from bot import AUTHORIZED_CHATS, SUDO_USERS, OWNER_ID
-
+from bot.helper.ext_utils.bot_utils import is_magnet, is_url
 
 class CustomFilters:
     class __OwnerFilter(MessageFilter):
