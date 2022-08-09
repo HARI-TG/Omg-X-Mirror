@@ -288,16 +288,6 @@ class MirrorListener:
             DbManger().rm_complete_task(self.message.link)
 
 def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=False, pswd=None, multi=0):
-    mesg = message.text.split('\n')
-    message_args = mesg[0].split(maxsplit=1)
-    name_args = mesg[0].split('|', maxsplit=1)
-    qbitsel = False
-    is_gdtot = False
-    bot_d = bot.get_me()
-    b_uname = bot_d.username
-    uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
-    uid= f"<a>{message.from_user.id}</a>"
-
     if len(message_args) > 1:
         link = message_args[1].strip()
         if link.startswith("s ") or link == "s":
