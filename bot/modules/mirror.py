@@ -304,7 +304,7 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
         reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
         message = sendMarkup(f"Hey Bro {uname}👋,\n\n<b>I Found That You Haven't Started Me In PM Yet 😶</b>\n\nFrom Now on i Will links in PM Only 😇", bot, message, reply_markup=reply_markup)     
         return
-    try:
+      try:
         user = bot.get_chat_member("-1001762089232", message.from_user.id)
         LOGGER.error(user.status)
         if user.status not in ('member','creator','administrator'):
