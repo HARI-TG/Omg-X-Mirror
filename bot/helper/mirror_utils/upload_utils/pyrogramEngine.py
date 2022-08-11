@@ -67,6 +67,14 @@ class TgUploader:
     def __upload_file(self, up_path, file_, dirpath):
         prefix = PRE_DICT.get(self.__listener.message.from_user.id, "")
         PRENAME_X = prefix
+        #pending 
+        if 
+        
+        else 
+        
+        elif
+        
+        
         if file_.startswith('www'):  
             file_ = ' '.join(file_.split()[1:])
             file_ = f"{PRENAME_X}"+ file_.strip('-').strip('_')
