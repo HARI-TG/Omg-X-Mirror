@@ -67,14 +67,29 @@ class TgUploader:
     def __upload_file(self, up_path, file_, dirpath):
         prefix = PRE_DICT.get(self.__listener.message.from_user.id, "")
         PRENAME_X = prefix
-        #pending 
-        if 
-        
-        else 
-        
-        elif
-        
-        
+        #Advance Level OF Renaming A file 
+        #user_cus_name = '@duke:teamhdt,trvpn'(userformat entry)
+        #yet to test working 
+        user_cus_name = PRENAME_X
+        if ':' in user_cus_name and ',' in user_cus_name:    
+            try:
+                user_cus_name = user_cus_name.split(':')
+                prefix_name = user_cus_name[0]
+                removal_name = user_cus_name[1]
+                removal_name = removal_name.split(',')
+                for i in removal_name:
+                    file_ = file_.replace(i,"")
+                file_ = f'{prefix_name} {file_)'
+                new_path = ospath.join(dirpath, file_)
+                osrename(up_path, new_path)
+                up_path = new_path
+                cap_mono = f"<code>{file_}</code>"
+                pm_cap = f"<b>{file_}</b>"
+            except Exception as err:
+                    LOGGER.error(f"Failed to log to channel:\n{err}") 
+        else:
+            print("Please Enter A Correct Format")
+        '''#i think below line is unncessary'''
         if file_.startswith('www'):  
             file_ = ' '.join(file_.split()[1:])
             file_ = f"{PRENAME_X}"+ file_.strip('-').strip('_')
@@ -82,10 +97,7 @@ class TgUploader:
             osrename(up_path, new_path)
             up_path = new_path
         else:
-            file_ = f"{PRENAME_X} {file_}"
-            new_path = ospath.join(dirpath, file_)
-            osrename(up_path, new_path)
-            up_path = new_path
+            up_path = up_path
             cap_mono = f"<code>{file_}</code>"
             pm_cap = f"<b>{file_}</b>"
         if CUSTOM_FILENAME is not None:
@@ -95,6 +107,7 @@ class TgUploader:
             osrename(up_path, new_path)
             up_path = new_path
         else:
+
             cap_mono = f"<code>{file_}</code>"
             pm_cap = f"<b>{file_}</b>"
         notMedia = False
