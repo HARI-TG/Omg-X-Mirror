@@ -89,7 +89,7 @@ class TgUploader:
                     LOGGER.error(f"Failed to log to channel:\n{err}") 
         else:
             print("Please Enter A Correct Format")
-        '''#i think below line is unncessary'''
+        '''i think below line is unncessary'''
         if file_.startswith('www'):  
             file_ = ' '.join(file_.split()[1:])
             file_ = f"{PRENAME_X}"+ file_.strip('-').strip('_')
