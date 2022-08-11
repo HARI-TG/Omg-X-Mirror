@@ -79,7 +79,7 @@ class TgUploader:
                 removal_name = removal_name.split(',')
                 for i in removal_name:
                     file_ = file_.replace(i,"")
-                file_ = f'{prefix_name} {file_)'
+                file_ = f'{prefix_name} {file_}'
                 new_path = ospath.join(dirpath, file_)
                 osrename(up_path, new_path)
                 up_path = new_path
