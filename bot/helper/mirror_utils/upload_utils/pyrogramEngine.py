@@ -88,7 +88,10 @@ class TgUploader:
             except Exception as err:
                     LOGGER.error(f"Failed to log to channel:\n{err}") 
         else:
-            print("Please Enter A Correct Format")
+            file_ = f"{PRENAME_X}"+ file_.strip('-').strip('_')
+            new_path = ospath.join(dirpath, file_)
+            osrename(up_path, new_path)
+            up_path = new_path
         
         if file_.startswith('www'):  
             file_ = ' '.join(file_.split()[1:])
